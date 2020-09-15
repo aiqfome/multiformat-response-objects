@@ -57,9 +57,14 @@ class Response implements Responsable
      */
     public function toResponse($request)
     {
-        return Container::getInstance()->call([$this, $this->responseMethod($request)], [
-            'request' => $request,
-        ]);
+        $response = app()->call([$this, $this->responseMethod($request)], ['request' => $request]);
+
+        // recursively look for more responsable objects
+        while ($response instanceof Responsable) {
+            $response = $response->toResponse($request);
+        }
+
+        return $response;
     }
 
     private function responseMethod(Request $request): string
