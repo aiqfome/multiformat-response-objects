@@ -239,7 +239,7 @@ class MultFormatResponseTest extends TestCase
 
     public function test_exception_is_throw_if_no_response_method_exists()
     {
-        $this->expectExceptionMessage('Method Tests\TestResponse::toMp3Response() does not exist');
+        $this->expectExceptionMessage('method Tests\TestResponse::toMp3Response()');
 
         Route::get('location{format}', function () {
             return new TestResponse;
@@ -295,4 +295,3 @@ class TestResponse extends Response
         return 'expected xlsx response';
     }
 }
-
